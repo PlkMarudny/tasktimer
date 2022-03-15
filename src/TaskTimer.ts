@@ -1,13 +1,18 @@
 /* tslint:disable:max-file-line-count */
 
 // dep modules
-import { EventEmitter } from 'eventemitter3';
+import { EventEmitter } from "eventemitter3";
 
 // own modules
 import {
-    ITaskOptions, ITaskTimerEvent, ITaskTimerOptions, ITimeInfo, Task as TTask, TaskCallback
-} from '.';
-import { utils } from './utils';
+    ITaskOptions,
+    ITaskTimerEvent,
+    ITaskTimerOptions,
+    ITimeInfo,
+    Task as TTask,
+    TaskCallback,
+} from ".";
+import { utils } from "./utils";
 
 /**
  *  @private
@@ -15,7 +20,7 @@ import { utils } from './utils';
 const DEFAULT_TIMER_OPTIONS: ITaskTimerOptions = Object.freeze({
     interval: 1000,
     precision: true,
-    stopOnCompleted: false
+    stopOnCompleted: false,
 });
 
 /**
@@ -39,14 +44,14 @@ const DEFAULT_TIMER_OPTIONS: ITaskTimerOptions = Object.freeze({
  *  @returns {Boolean} - `true` if the event had listeners, else `false`.
  */
 
- /**
-  *  Return an array listing the events for which the emitter has registered
-  *  listeners.
-  *  @name TaskTimer#eventNames
-  *  @function
-  *
-  *  @returns {Array} - List of event names.
-  */
+/**
+ *  Return an array listing the events for which the emitter has registered
+ *  listeners.
+ *  @name TaskTimer#eventNames
+ *  @function
+ *
+ *  @returns {Array} - List of event names.
+ */
 
 /**
  *  Adds the listener function to the end of the listeners array for the event
@@ -104,25 +109,25 @@ const DEFAULT_TIMER_OPTIONS: ITaskTimerOptions = Object.freeze({
  *  @returns {TaskTimer} - `{@link #TaskTimer|TaskTimer}` instance.
  */
 
- /**
-  *  Gets the number of listeners listening to a given event.
-  *  @name TaskTimer#listenerCount
-  *  @function
-  *
-  *  @param {TaskTimer.Event} eventName - The name of the event.
-  *
-  *  @returns {Number} - The number of listeners.
-  */
+/**
+ *  Gets the number of listeners listening to a given event.
+ *  @name TaskTimer#listenerCount
+ *  @function
+ *
+ *  @param {TaskTimer.Event} eventName - The name of the event.
+ *
+ *  @returns {Number} - The number of listeners.
+ */
 
- /**
-  *  Gets the listeners registered for a given event.
-  *  @name TaskTimer#listeners
-  *  @function
-  *
-  *  @param {TaskTimer.Event} eventName - The name of the event.
-  *
-  *  @returns {Array} - The registered listeners.
-  */
+/**
+ *  Gets the listeners registered for a given event.
+ *  @name TaskTimer#listeners
+ *  @function
+ *
+ *  @param {TaskTimer.Event} eventName - The name of the event.
+ *
+ *  @returns {Array} - The registered listeners.
+ */
 
 /**
  *  Removes all listeners, or those of the specified `eventName`.
@@ -152,7 +157,6 @@ const DEFAULT_TIMER_OPTIONS: ITaskTimerOptions = Object.freeze({
  *  {@link https://nodejs.org/api/events.html#events_class_eventemitter|EventEmitter}
  */
 class TaskTimer extends EventEmitter {
-
     /**
      *  Inner storage for Tasktimer.
      *  @private
@@ -237,9 +241,10 @@ class TaskTimer extends EventEmitter {
         this._reset();
 
         this._.opts = {};
-        const opts = typeof options === 'number'
-            ? { interval: options }
-            : options || {} as any;
+        const opts =
+            typeof options === "number"
+                ? { interval: options }
+                : options || ({} as any);
         this.interval = opts.interval;
         this.precision = opts.precision;
         this.stopOnCompleted = opts.stopOnCompleted;
@@ -264,7 +269,11 @@ class TaskTimer extends EventEmitter {
         return this._.opts.interval;
     }
     set interval(value: number) {
-        this._.opts.interval = utils.getNumber(value, 20, DEFAULT_TIMER_OPTIONS.interval);
+        this._.opts.interval = utils.getNumber(
+            value,
+            20,
+            DEFAULT_TIMER_OPTIONS.interval
+        );
     }
 
     /**
@@ -299,7 +308,10 @@ class TaskTimer extends EventEmitter {
         return this._.opts.precision;
     }
     set precision(value: boolean) {
-        this._.opts.precision = utils.getBool(value, DEFAULT_TIMER_OPTIONS.precision);
+        this._.opts.precision = utils.getBool(
+            value,
+            DEFAULT_TIMER_OPTIONS.precision
+        );
     }
 
     /**
@@ -314,7 +326,10 @@ class TaskTimer extends EventEmitter {
         return this._.opts.stopOnCompleted;
     }
     set stopOnCompleted(value: boolean) {
-        this._.opts.stopOnCompleted = utils.getBool(value, DEFAULT_TIMER_OPTIONS.stopOnCompleted);
+        this._.opts.stopOnCompleted = utils.getBool(
+            value,
+            DEFAULT_TIMER_OPTIONS.stopOnCompleted
+        );
     }
 
     /**
@@ -342,10 +357,11 @@ class TaskTimer extends EventEmitter {
         const t: ITimeInfo = {
             started: startTime,
             stopped: stopTime,
-            elapsed: 0
+            elapsed: 0,
         };
         if (startTime) {
-            const current = this.state !== TaskTimer.State.STOPPED ? Date.now() : stopTime;
+            const current =
+                this.state !== TaskTimer.State.STOPPED ? Date.now() : stopTime;
             t.elapsed = current - startTime;
         }
         return Object.freeze(t);
@@ -410,6 +426,16 @@ class TaskTimer extends EventEmitter {
     }
 
     /**
+     *  Gets array of ids of all tasks
+     *  @memberof TaskTimer
+     *
+     *  @returns [{String}]
+     */
+    getAllTask(): [string] {
+        return Object.keys(this._.tasks);
+    }
+
+    /**
      *  Adds a collection of new tasks for the timer.
      *  @memberof TaskTimer
      *  @chainable
@@ -423,9 +449,17 @@ class TaskTimer extends EventEmitter {
      *  @throws {Error} - If a task callback is not set or a task with the given
      *  name already exists.
      */
-    add(task: TTask | ITaskOptions | TaskCallback | Array<TTask | ITaskOptions | TaskCallback>): TaskTimer {
+    add(
+        task:
+            | TTask
+            | ITaskOptions
+            | TaskCallback
+            | Array<TTask | ITaskOptions | TaskCallback>
+    ): TaskTimer {
         if (!utils.isset(task)) {
-            throw new Error('Either a task, task options or a callback is required.');
+            throw new Error(
+                "Either a task, task options or a callback is required."
+            );
         }
         utils.ensureArray(task).forEach((item: any) => this._add(item));
         return this;
@@ -444,7 +478,7 @@ class TaskTimer extends EventEmitter {
      *  @throws {Error} - If a task with the given name does not exist.
      */
     remove(task: string | TTask): TaskTimer {
-        const id: string = typeof task === 'string' ? task : task.id;
+        const id: string = typeof task === "string" ? task : task.id;
         task = this.get(id);
 
         if (!id || !task) {
@@ -452,7 +486,8 @@ class TaskTimer extends EventEmitter {
         }
 
         // first decrement completed tasks count if this is a completed task.
-        if (task.completed && this._.completedTaskCount > 0) this._.completedTaskCount--;
+        if (task.completed && this._.completedTaskCount > 0)
+            this._.completedTaskCount--;
 
         this._.tasks[id] = null;
         delete this._.tasks[id];
@@ -564,7 +599,7 @@ class TaskTimer extends EventEmitter {
         const event: ITaskTimerEvent = {
             name: type,
             source: this,
-            data
+            data,
         };
         return this.emit(type, event);
     }
@@ -583,13 +618,13 @@ class TaskTimer extends EventEmitter {
      *  given name already exists.
      */
     private _add(options: TTask | ITaskOptions | TaskCallback): TaskTimer {
-        if (typeof options === 'function') {
+        if (typeof options === "function") {
             options = {
-                callback: options
+                callback: options,
             };
         }
 
-        if (utils.type(options) === 'object' && !options.id) {
+        if (utils.type(options) === "object" && !options.id) {
             (options as ITaskOptions).id = this._getUniqueTaskID();
         }
 
@@ -626,7 +661,7 @@ class TaskTimer extends EventEmitter {
      */
     private _reset(): void {
         this._ = {
-            opts: (this._ || {} as any).opts,
+            opts: (this._ || ({} as any)).opts,
             state: TaskTimer.State.IDLE,
             tasks: {},
             tickCount: 0,
@@ -636,7 +671,7 @@ class TaskTimer extends EventEmitter {
             completedTaskCount: 0,
             resumeTime: 0,
             hrResumeTime: null,
-            tickCountAfterResume: 0
+            tickCountAfterResume: 0,
         };
         this._stop();
     }
@@ -694,7 +729,8 @@ class TaskTimer extends EventEmitter {
      */
     private _markTime(): void {
         /* istanbul ignore if */
-        if (utils.BROWSER) { // tested separately
+        if (utils.BROWSER) {
+            // tested separately
             this._.resumeTime = Date.now();
         } else {
             this._.hrResumeTime = process.hrtime();
@@ -712,7 +748,7 @@ class TaskTimer extends EventEmitter {
         if (utils.BROWSER) return Date.now() - this._.resumeTime; // tested separately
 
         const hrDiff = process.hrtime(this._.hrResumeTime);
-        return Math.ceil((hrDiff[0] * 1000) + (hrDiff[1] / 1e6));
+        return Math.ceil(hrDiff[0] * 1000 + hrDiff[1] / 1e6);
     }
 
     /**
@@ -750,7 +786,7 @@ class TaskTimer extends EventEmitter {
         let id: string;
         while (!id || this.get(id)) {
             num++;
-            id = 'task' + num;
+            id = "task" + num;
         }
         return id;
     }
@@ -764,7 +800,6 @@ class TaskTimer extends EventEmitter {
 /* istanbul ignore next */
 /** @private */
 namespace TaskTimer {
-
     /**
      *  Represents the class that holds the configurations and the callback function
      *  required to run a task. See {@link api/#Task|class information}.
@@ -786,23 +821,23 @@ namespace TaskTimer {
          *  Also when an existing timer is reset, it will be `idle`.
          *  @type {String}
          */
-        IDLE = 'idle',
+        IDLE = "idle",
         /**
          *  Indicates that the timer is in `running` state; such as when the timer is
          *  started or resumed.
          *  @type {String}
          */
-        RUNNING = 'running',
+        RUNNING = "running",
         /**
          *  Indicates that the timer is in `paused` state.
          *  @type {String}
          */
-        PAUSED = 'paused',
+        PAUSED = "paused",
         /**
          *  Indicates that the timer is in `stopped` state.
          *  @type {String}
          */
-        STOPPED = 'stopped'
+        STOPPED = "stopped",
     }
 
     /**
@@ -816,51 +851,51 @@ namespace TaskTimer {
          *  Emitted on each tick (interval) of `TaskTimer`.
          *  @type {String}
          */
-        TICK = 'tick',
+        TICK = "tick",
         /**
          *  Emitted when the timer is put in `RUNNING` state; such as when the timer is
          *  started.
          *  @type {String}
          */
-        STARTED = 'started',
+        STARTED = "started",
         /**
          *  Emitted when the timer is put in `RUNNING` state; such as when the timer is
          *  resumed.
          *  @type {String}
          */
-        RESUMED = 'resumed',
+        RESUMED = "resumed",
         /**
          *  Emitted when the timer is put in `PAUSED` state.
          *  @type {String}
          */
-        PAUSED = 'paused',
+        PAUSED = "paused",
         /**
          *  Emitted when the timer is put in `STOPPED` state.
          *  @type {String}
          */
-        STOPPED = 'stopped',
+        STOPPED = "stopped",
         /**
          *  Emitted when the timer is reset.
          *  @type {String}
          */
-        RESET = 'reset',
+        RESET = "reset",
         /**
          *  Emitted when a task is executed.
          *  @type {String}
          */
-        TASK = 'task',
+        TASK = "task",
         /**
          *  Emitted when a task is added to `TaskTimer` instance.
          *  @type {String}
          */
-        TASK_ADDED = 'taskAdded',
+        TASK_ADDED = "taskAdded",
         /**
          *  Emitted when a task is removed from `TaskTimer` instance.
          *  Note that this will not be emitted when `.reset()` is called; which
          *  removes all tasks silently.
          *  @type {String}
          */
-        TASK_REMOVED = 'taskRemoved',
+        TASK_REMOVED = "taskRemoved",
         /**
          *  Emitted when a task has completed all of its executions (runs)
          *  or reached its stopping date/time (if set). Note that this event
@@ -868,12 +903,12 @@ namespace TaskTimer {
          *  `stopDate` value set.
          *  @type {String}
          */
-        TASK_COMPLETED = 'taskCompleted',
+        TASK_COMPLETED = "taskCompleted",
         /**
          *  Emitted when a task produces an error on its execution.
          *  @type {String}
          */
-        TASK_ERROR = 'taskError',
+        TASK_ERROR = "taskError",
         /**
          *  Emitted when all tasks have completed all of their executions (runs)
          *  or reached their stopping date/time (if set). Note that this event
@@ -881,7 +916,7 @@ namespace TaskTimer {
          *  `stopDate` value set.
          *  @type {String}
          */
-        COMPLETED = 'completed'
+        COMPLETED = "completed",
     }
 }
 
