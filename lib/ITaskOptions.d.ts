@@ -85,6 +85,7 @@ interface ITaskBaseOptions {
      *  });
      */
     callback: TaskCallback;
+    meta?: any;
 }
 /**
  *  Interface for task options.

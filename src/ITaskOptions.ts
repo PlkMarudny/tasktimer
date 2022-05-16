@@ -86,6 +86,7 @@ interface ITaskBaseOptions {
      *  });
      */
     callback: TaskCallback;
+    meta?: any;
 }
 
 /**
@@ -100,7 +101,6 @@ interface ITaskOptions extends ITaskBaseOptions {
      *  @type {string}
      */
     id?: string;
-    meta?: any;
 }
 
 export {

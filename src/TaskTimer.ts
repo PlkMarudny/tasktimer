@@ -430,11 +430,11 @@ class TaskTimer extends EventEmitter {
      *  Gets array of ids of all tasks
      *  @memberof TaskTimer
      *
-     *  @returns [{String}]
+     *  @returns Array<String>
      */
-    // getAllTask(): [string] {
-    //     return Object.keys(this._.tasks);
-    // }
+    getAllTask(): Array<string> {
+        return Object.keys(this._.tasks) || [];
+    }
 
     /**
      *  Adds a collection of new tasks for the timer.

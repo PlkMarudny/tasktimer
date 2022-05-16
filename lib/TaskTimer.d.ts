@@ -1,5 +1,5 @@
-import { EventEmitter } from 'eventemitter3';
-import { ITaskOptions, ITaskTimerOptions, ITimeInfo, Task as TTask, TaskCallback } from '.';
+import { EventEmitter } from "eventemitter3";
+import { ITaskOptions, ITaskTimerOptions, ITimeInfo, Task as TTask, TaskCallback } from ".";
 /**
  *  TaskTimer • https://github.com/onury/tasktimer
  *  @license MIT
@@ -280,6 +280,13 @@ declare class TaskTimer extends EventEmitter {
      *  @returns {Task}
      */
     get(id: string): TTask;
+    /**
+     *  Gets array of ids of all tasks
+     *  @memberof TaskTimer
+     *
+     *  @returns Array<String>
+     */
+    getAllTask(): Array<string>;
     /**
      *  Adds a collection of new tasks for the timer.
      *  @memberof TaskTimer
