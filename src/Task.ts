@@ -15,7 +15,8 @@ const DEFAULT_TASK_OPTIONS: ITaskOptions = Object.freeze({
     stopDate: null,
     immediate: false,
     removeOnCompleted: false,
-    callback: null
+    callback: null,
+    meta: null
 });
 
 /**
