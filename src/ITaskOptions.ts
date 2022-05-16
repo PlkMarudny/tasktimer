@@ -100,6 +100,7 @@ interface ITaskOptions extends ITaskBaseOptions {
      *  @type {string}
      */
     id?: string;
+    meta?: any;
 }
 
 export {
