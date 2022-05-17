@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## 3.1.2 (2022-05-17)
+
+### Added
+Additional 'meta' field of type 'any' added to a task.
+
 ## 3.0.0 (2019-08-02)
 
 ### Changed
