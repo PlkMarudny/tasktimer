@@ -15,8 +15,8 @@ const DEFAULT_TASK_OPTIONS: ITaskOptions = Object.freeze({
     stopDate: null,
     immediate: false,
     removeOnCompleted: false,
-    callback: null,
     meta: null
+    callback: null,
 });
 
 /**
@@ -164,6 +164,17 @@ class Task {
             stopped,
             elapsed: stopped - started
         });
+    }
+
+    /**
+     * Gets additional data attached to the task
+     *  @type {any}
+     */
+    get meta(): any {
+        return this._meta;
+    }
+    set meta(data: any) {
+        this._.meta = data;
     }
 
     /**
