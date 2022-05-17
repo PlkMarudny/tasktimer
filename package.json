@@ -1,6 +1,6 @@
 {
     "name": "tasktimer",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "description": "An accurate timer utility for running periodic tasks on the given interval ticks or dates. (Node and Browser)",
     "author": "Onur Yıldırım <onur@cutepilot.com>",
     "license": "MIT",
