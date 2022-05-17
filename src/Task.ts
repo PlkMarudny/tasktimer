@@ -15,8 +15,8 @@ const DEFAULT_TASK_OPTIONS: ITaskOptions = Object.freeze({
     stopDate: null,
     immediate: false,
     removeOnCompleted: false,
-    meta: null
-    callback: null,
+    meta: null,
+    callback: null
 });
 
 /**
@@ -171,10 +171,10 @@ class Task {
      *  @type {any}
      */
     get meta(): any {
-        return this._meta;
+        return this._.meta;
     }
     set meta(data: any) {
-        this._.meta = data;
+        this._.meta = data || DEFAULT_TASK_OPTIONS.meta;
     }
 
     /**
@@ -391,6 +391,7 @@ class Task {
         this.tickInterval = options.tickInterval;
         this.totalRuns = options.totalRuns;
         this.immediate = options.immediate;
+        this.meta = options.meta;
         this.removeOnCompleted = options.removeOnCompleted;
     }
 }

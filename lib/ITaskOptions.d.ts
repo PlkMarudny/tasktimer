@@ -63,6 +63,11 @@ interface ITaskBaseOptions {
      */
     removeOnCompleted?: boolean;
     /**
+     *  Add any additional data to a task
+     *  @type {any}
+     */
+    meta?: any;
+    /**
      *  The callback function of the task to be executed on each run. The task
      *  itself is passed to this callback, as the first argument. If you're
      *  defining an async task; either return a `Promise` or call `done()`
@@ -85,7 +90,6 @@ interface ITaskBaseOptions {
      *  });
      */
     callback: TaskCallback;
-    meta?: any;
 }
 /**
  *  Interface for task options.

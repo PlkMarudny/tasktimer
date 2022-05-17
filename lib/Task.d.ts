@@ -87,6 +87,11 @@ declare class Task {
      */
     readonly time: ITimeInfo;
     /**
+     * Gets additional data attached to the task
+     *  @type {any}
+     */
+    meta: any;
+    /**
      *  Gets the callback function to be executed on each run.
      *  @name Task#callback
      *  @type {TaskCallback}

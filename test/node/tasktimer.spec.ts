@@ -44,6 +44,7 @@ describe('TaskTimer (Node/TypeScript)', () => {
         expect(task.totalRuns).toEqual(null);
         expect(task.removeOnCompleted).toEqual(false);
         expect(task.immediate).toEqual(false);
+        expect(task.meta).toEqual(null);
 
         task = timer.add({ callback: () => {} }).get('task1');
         expect(task.enabled).toEqual(true);
@@ -53,6 +54,7 @@ describe('TaskTimer (Node/TypeScript)', () => {
         expect(task.totalRuns).toEqual(null);
         expect(task.removeOnCompleted).toEqual(false);
         expect(task.immediate).toEqual(false);
+        expect(task.meta).toEqual(null);
 
         const callback = o => o;
         task = new Task({
@@ -63,6 +65,10 @@ describe('TaskTimer (Node/TypeScript)', () => {
             totalRuns: 3,
             removeOnCompleted: true,
             immediate: true,
+            meta: {
+                author: "Unknown",
+                layer: 1
+            },
             callback
         });
         expect(task.enabled).toEqual(false);
@@ -72,6 +78,10 @@ describe('TaskTimer (Node/TypeScript)', () => {
         expect(task.totalRuns).toEqual(3);
         expect(task.removeOnCompleted).toEqual(true);
         expect(task.immediate).toEqual(true);
+        expect(task.meta).toEqual({
+            author: "Unknown",
+            layer: 1
+        });
         expect(task.callback).toEqual(callback);
     });
 
