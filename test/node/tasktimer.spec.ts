@@ -126,6 +126,7 @@ describe('TaskTimer (Node/TypeScript)', () => {
         };
         timer.add(task1Opts);
         expect(timer.taskCount).toEqual(1);
+        expect(timer.getTasks()).toEqual(['heartbeat']);
 
         const task2: Task = new Task({
             id: 'remove-check',
@@ -140,6 +141,7 @@ describe('TaskTimer (Node/TypeScript)', () => {
         });
         timer.add(task2);
         expect(timer.taskCount).toEqual(2);
+        expect(timer.getTasks()).toEqual(['heartbeat', 'remove-check']);
 
         const task3: ITaskOptions = {
             id: 'final-check',
@@ -166,6 +168,7 @@ describe('TaskTimer (Node/TypeScript)', () => {
         };
         timer.add(task3);
         expect(timer.taskCount).toEqual(3);
+        expect(timer.getTasks()).toEqual(['heartbeat', 'remove-check', 'final-check']);
 
         // cannot add a task with existing id
         const t1 = {

@@ -425,14 +425,13 @@ class TaskTimer extends EventEmitter {
         return this._.tasks[id] || null;
     }
 
-    // TODO implement this
     /**
      *  Gets array of ids of all tasks
      *  @memberof TaskTimer
      *
      *  @returns Array<String>
      */
-    getAllTask(): Array<string> {
+    getTasks(): Array<string> {
         return Object.keys(this._.tasks) || [];
     }
 

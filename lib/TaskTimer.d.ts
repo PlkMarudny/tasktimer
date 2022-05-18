@@ -286,7 +286,7 @@ declare class TaskTimer extends EventEmitter {
      *
      *  @returns Array<String>
      */
-    getAllTask(): Array<string>;
+    getTasks(): Array<string>;
     /**
      *  Adds a collection of new tasks for the timer.
      *  @memberof TaskTimer
